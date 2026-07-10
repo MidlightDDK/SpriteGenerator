@@ -177,7 +177,6 @@ public class GameManager : MonoBehaviour
             "pants_shorts_brown" => 1,
             "pants_trousers_tan" => 1,
             "pants_traveler_green" => 1,
-            "pants_fitted_dark" => 1,
             "accessory_bag" => 2,
             "accessory_cape" => 1,
             _ => GetSortingOrder(selection.Category)
@@ -196,7 +195,6 @@ public class GameManager : MonoBehaviour
             "pants_shorts_brown" => new Vector3(0f, 0f, 0f),
             "pants_trousers_tan" => new Vector3(0f, 0f, 0f),
             "pants_traveler_green" => new Vector3(0f, 0f, 0f),
-            "pants_fitted_dark" => new Vector3(0f, 0f, 0f),
 
             "hair_short_brown" => new Vector3(0f, 0f, 0f),
             "hair_ponytail_auburn" => new Vector3(0.03f, 0f, 0f),
