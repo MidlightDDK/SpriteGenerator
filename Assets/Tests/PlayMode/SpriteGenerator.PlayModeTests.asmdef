@@ -1,0 +1,19 @@
+{
+  "name": "SpriteGenerator.PlayModeTests",
+  "rootNamespace": "SpriteGenerator.Tests.PlayMode",
+  "references": [
+    "SpriteGenerator.Runtime"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

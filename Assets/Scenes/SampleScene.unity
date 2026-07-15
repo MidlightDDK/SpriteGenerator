@@ -148,19 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef6128414ce1c44c9ddb3481a6be0fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  spriteAssetLibrary: {fileID: 1616507985}
-  previewPosition: {x: 0, y: 0, z: 0}
-  previewScale: {x: 1, y: 1, z: 1}
-  bodyOffset: {x: 0, y: 0, z: 0}
-  bodyScale: {x: 1, y: 1, z: 1}
-  pantsOffset: {x: -0.06, y: -0.8, z: 0}
-  pantsScale: {x: 0.51, y: 0.51, z: 1}
-  clothingOffset: {x: -0.02, y: 0.3, z: 0}
-  clothingScale: {x: 0.6, y: 0.6, z: 1}
-  hairOffset: {x: -0.01, y: 2.01, z: 0}
-  hairScale: {x: 0.5, y: 0.5, z: 1}
-  accessoryOffset: {x: 0, y: 0, z: 0}
-  accessoryScale: {x: 0.5, y: 0.5, z: 1}
 --- !u!4 &222353433
 Transform:
   m_ObjectHideFlags: 0
@@ -257,7 +244,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BackGroundColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -397,128 +384,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1616507984
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1616507986}
-  - component: {fileID: 1616507985}
-  m_Layer: 0
-  m_Name: SpriteAssetLibrary
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1616507985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1616507984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09d7621ef5b5ffa4b84f4858aca67b64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpriteAssetLibrary
-  spriteOptions:
-  - id: body_light
-    category: 0
-    sprite: {fileID: 21300000, guid: ad935fe708d540488db9f895f0e152f6, type: 3}
-    enabledForRandomization: 1
-  - id: body_tan
-    category: 0
-    sprite: {fileID: 21300000, guid: 07a0f4e896004bbbb1496eb7baaaccc8, type: 3}
-    enabledForRandomization: 1
-  - id: body_brown
-    category: 0
-    sprite: {fileID: 21300000, guid: eebf31dec110477dab20e0896e16a99c, type: 3}
-    enabledForRandomization: 1
-  - id: body_dark
-    category: 0
-    sprite: {fileID: 21300000, guid: b35f95cee2bd4ec3acd77c0c6dabcd5f, type: 3}
-    enabledForRandomization: 1
-  - id: pants_shorts_brown
-    category: 1
-    sprite: {fileID: 21300000, guid: 26d7cc53c07f420ca30e9cc2d59a6156, type: 3}
-    enabledForRandomization: 1
-  - id: pants_trousers_tan
-    category: 1
-    sprite: {fileID: 21300000, guid: 6156993d76e442b8aa9e9ffbc8efa8ae, type: 3}
-    enabledForRandomization: 1
-  - id: pants_traveler_green
-    category: 1
-    sprite: {fileID: 21300000, guid: 48900c75ffff4dfba2b7153c73e3f301, type: 3}
-    enabledForRandomization: 1
-  - id: hair_short_brown
-    category: 2
-    sprite: {fileID: 21300000, guid: c1d9a2216c114d93b754d01e9b84d4dc, type: 3}
-    enabledForRandomization: 1
-  - id: hair_ponytail_auburn
-    category: 2
-    sprite: {fileID: 21300000, guid: 0f9c9b2b0d6b4d0d99477d2add35e15f, type: 3}
-    enabledForRandomization: 1
-  - id: hair_messy_black
-    category: 2
-    sprite: {fileID: 21300000, guid: 58bfaf6f0ae54813a36a60b12c69e71c, type: 3}
-    enabledForRandomization: 1
-  - id: hair_spiky_blonde
-    category: 2
-    sprite: {fileID: 21300000, guid: 1172ec99f0224b1fb79a8d86612b462c, type: 3}
-    enabledForRandomization: 1
-  - id: clothing_tunic
-    category: 3
-    sprite: {fileID: 21300000, guid: 833bcaa22b704387aa6fa455f366af4d, type: 3}
-    enabledForRandomization: 1
-  - id: clothing_traveler
-    category: 3
-    sprite: {fileID: 21300000, guid: 161dc2fef5d749a7ba26e208e66d68ee, type: 3}
-    enabledForRandomization: 1
-  - id: clothing_leather_armor
-    category: 3
-    sprite: {fileID: 21300000, guid: e2904a8018044a4a8b37b5f3be6d4d25, type: 3}
-    enabledForRandomization: 1
-  - id: clothing_mage_robe
-    category: 3
-    sprite: {fileID: 21300000, guid: b199256cd1f546ef96cd6772d5631da3, type: 3}
-    enabledForRandomization: 1
-  - id: accessory_glasses
-    category: 4
-    sprite: {fileID: 21300000, guid: d369a13adcae4e26ac0e60397ca5f0dc, type: 3}
-    enabledForRandomization: 0
-  - id: accessory_headband
-    category: 4
-    sprite: {fileID: 21300000, guid: af5ff7de4b6545b69c6ca24a8f72982e, type: 3}
-    enabledForRandomization: 0
-  - id: accessory_cape
-    category: 4
-    sprite: {fileID: 21300000, guid: 2e728a9973ea4ab49b92309e28861650, type: 3}
-    enabledForRandomization: 0
-  - id: accessory_bag
-    category: 4
-    sprite: {fileID: 21300000, guid: 5251711c231f46af9caf44798fbb57d5, type: 3}
-    enabledForRandomization: 0
-  requiredCategories: 00000000010000000200000003000000
---- !u!4 &1616507986
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1616507984}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -526,4 +391,3 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 222353433}
-  - {fileID: 1616507986}

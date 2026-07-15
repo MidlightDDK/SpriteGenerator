@@ -1,0 +1,21 @@
+{
+  "name": "SpriteGenerator.EditModeTests",
+  "rootNamespace": "SpriteGenerator.Tests.EditMode",
+  "references": [
+    "SpriteGenerator.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
