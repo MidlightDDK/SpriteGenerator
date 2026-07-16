@@ -144,6 +144,33 @@ namespace SpriteGenerator.Tests.EditMode
             }
         }
 
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("   ")]
+        public void PresentationSettings_EmptyExportDirectory_UsesCurrentFolder(string configuredDirectory)
+        {
+            var presentation = new RuntimePresentationSettings
+            {
+                ExportDirectory = configuredDirectory
+            };
+
+            Assert.That(
+                presentation.ResolveExportDirectory(),
+                Is.EqualTo(Path.GetFullPath(Directory.GetCurrentDirectory())));
+        }
+
+        [Test]
+        public void PresentationSettings_PastedQuotedDirectory_IsTrimmed()
+        {
+            string currentDirectory = Path.GetFullPath(Directory.GetCurrentDirectory());
+            var presentation = new RuntimePresentationSettings
+            {
+                ExportDirectory = $"  \"{currentDirectory}\"  "
+            };
+
+            Assert.That(presentation.ResolveExportDirectory(), Is.EqualTo(currentDirectory));
+        }
+
         [Test]
         public void Controller_DefaultExportName_UsesConfiguredPrefixAndSeed()
         {
@@ -160,7 +187,6 @@ namespace SpriteGenerator.Tests.EditMode
             };
             var presentation = new RuntimePresentationSettings
             {
-                ExportDirectory = directory,
                 ExportFilePrefix = "custom"
             };
             var controller = new CharacterGeneratorController(
@@ -168,9 +194,11 @@ namespace SpriteGenerator.Tests.EditMode
                 new CharacterLayerLocks(),
                 presentation,
                 owner.transform);
+            controller.ExportDirectory = directory;
 
             try
             {
+                Assert.That(controller.ExportDirectory, Is.EqualTo(directory));
                 Assert.That(controller.Generate().Succeeded, Is.True);
                 settings.Seed = 9999;
                 PngExportResult export = controller.Export();

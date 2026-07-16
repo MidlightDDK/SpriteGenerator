@@ -24,6 +24,10 @@ namespace SpriteGenerator.Tests.PlayMode
             Assert.That(preview, Is.Not.Null,
                 $"Play startup did not create the {SpritePreviewPresenter.PreviewObjectName} child.");
 
+            Transform controls = manager.transform.Find("CharacterGeneratorControls");
+            Assert.That(controls, Is.Not.Null, "Play startup did not create the runtime controls.");
+            Assert.That(controls.GetComponent<CharacterGeneratorRuntimePanel>(), Is.Not.Null);
+
             SpriteRenderer renderer = preview.GetComponent<SpriteRenderer>();
             Assert.That(renderer, Is.Not.Null);
             Assert.That(renderer.enabled, Is.True);

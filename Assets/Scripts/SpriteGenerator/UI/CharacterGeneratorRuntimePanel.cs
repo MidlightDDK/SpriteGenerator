@@ -13,6 +13,8 @@ namespace SpriteGenerator
     {
         private const float PanelMargin = 10f;
         private const float PreferredPanelWidth = 390f;
+        private const float FooterHeight = 38f;
+        private const float FooterSpacing = 6f;
 
         private CharacterGeneratorController controller;
         private Vector2 scrollPosition;
@@ -21,6 +23,7 @@ namespace SpriteGenerator
         private string heightText = string.Empty;
         private string pixelsPerUnitText = string.Empty;
         private string seedText = string.Empty;
+        private string exportDirectoryText = string.Empty;
         private bool numericInputsDirty;
         private bool numericInputsValid;
         private string numericValidationMessage = string.Empty;
@@ -55,6 +58,7 @@ namespace SpriteGenerator
             }
 
             SynchronizeNumericText();
+            SynchronizeExportDirectoryText();
 
             CharacterPixelData current = controller.CurrentPixelData;
             if (current != null)
@@ -89,7 +93,19 @@ namespace SpriteGenerator
                 Mathf.Max(1f, panelRect.width - (innerMargin * 2f)),
                 Mathf.Max(1f, panelRect.height - (innerMargin * 2f)));
 
-            GUILayout.BeginArea(contentRect);
+            float footerHeight = Mathf.Min(FooterHeight, contentRect.height);
+            var footerRect = new Rect(
+                contentRect.x,
+                contentRect.yMax - footerHeight,
+                contentRect.width,
+                footerHeight);
+            var scrollRect = new Rect(
+                contentRect.x,
+                contentRect.y,
+                contentRect.width,
+                Mathf.Max(1f, footerRect.y - contentRect.y - FooterSpacing));
+
+            GUILayout.BeginArea(scrollRect);
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true);
 
             GUILayout.Label("Runtime Character Sprite Generator", titleStyle);
@@ -101,18 +117,22 @@ namespace SpriteGenerator
             if (controller == null)
             {
                 GUILayout.Label(operationMessage, errorStyle);
-                GUILayout.EndScrollView();
-                GUILayout.EndArea();
-                return;
+            }
+            else
+            {
+                DrawCanvasSettings();
+                DrawProportionSettings();
+                DrawDesignSettings();
+                DrawExportSettings();
+                DrawActions();
+                DrawFeedback();
             }
 
-            DrawCanvasSettings();
-            DrawProportionSettings();
-            DrawDesignSettings();
-            DrawActions();
-            DrawFeedback();
-
             GUILayout.EndScrollView();
+            GUILayout.EndArea();
+
+            GUILayout.BeginArea(footerRect);
+            DrawApplicationControls();
             GUILayout.EndArea();
         }
 
@@ -233,6 +253,38 @@ namespace SpriteGenerator
             GUILayout.Space(8f);
         }
 
+        private void DrawExportSettings()
+        {
+            GUILayout.Label("Export Folder", sectionStyle);
+            GUILayout.Label(
+                "PNG files are written to this folder. You can paste a path or choose one with the Windows folder browser.",
+                wrappedLabelStyle);
+
+            string editedDirectory = GUILayout.TextField(exportDirectoryText ?? string.Empty);
+            if (!string.Equals(editedDirectory, exportDirectoryText, StringComparison.Ordinal))
+            {
+                exportDirectoryText = editedDirectory;
+                controller.ExportDirectory = editedDirectory;
+            }
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Browse...", GUILayout.MinHeight(28f)))
+            {
+                TryChooseExportDirectory();
+            }
+
+            if (GUILayout.Button("Current Folder", GUILayout.MinHeight(28f)))
+            {
+                controller.UseDefaultExportDirectory();
+                SynchronizeExportDirectoryText();
+                operationMessage = $"Export folder reset to {exportDirectoryText}";
+                operationFailed = false;
+            }
+
+            GUILayout.EndHorizontal();
+            GUILayout.Space(8f);
+        }
+
         private void DrawFeedback()
         {
             GUILayout.Label("Result", sectionStyle);
@@ -255,6 +307,18 @@ namespace SpriteGenerator
             {
                 GUILayout.Label("Last export (full path)", sectionStyle);
                 GUILayout.TextArea(exportPath, pathStyle);
+            }
+        }
+
+        private static void DrawApplicationControls()
+        {
+            if (GUILayout.Button("Quit", GUILayout.ExpandHeight(true)))
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
             }
         }
 
@@ -369,6 +433,7 @@ namespace SpriteGenerator
         {
             try
             {
+                controller.ExportDirectory = exportDirectoryText;
                 PngExportResult result = controller.Export();
                 operationMessage = result.Message;
                 operationFailed = !result.Succeeded;
@@ -381,6 +446,28 @@ namespace SpriteGenerator
             catch (Exception exception)
             {
                 RecordUnexpectedFailure("PNG export", exception);
+            }
+        }
+
+        private void TryChooseExportDirectory()
+        {
+            GUI.FocusControl(null);
+            if (NativeFolderPicker.TrySelectFolder(
+                    exportDirectoryText,
+                    out string selectedDirectory,
+                    out string errorMessage))
+            {
+                exportDirectoryText = selectedDirectory;
+                controller.ExportDirectory = selectedDirectory;
+                operationMessage = $"Export folder set to {selectedDirectory}";
+                operationFailed = false;
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                operationMessage = errorMessage;
+                operationFailed = true;
             }
         }
 
@@ -407,6 +494,11 @@ namespace SpriteGenerator
             seedText = settings.Seed.ToString(CultureInfo.InvariantCulture);
             numericInputsDirty = true;
             ValidateAndApplyNumericInputs();
+        }
+
+        private void SynchronizeExportDirectoryText()
+        {
+            exportDirectoryText = controller.ResolvedExportDirectory;
         }
 
         private void ValidateAndApplyNumericInputs()

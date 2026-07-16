@@ -68,6 +68,14 @@ namespace SpriteGenerator
 
         public SpritePreviewPresenter Presenter => presenter;
 
+        public string ExportDirectory
+        {
+            get => presentationSettings.ExportDirectory;
+            set => presentationSettings.ExportDirectory = value;
+        }
+
+        public string ResolvedExportDirectory => presentationSettings.ResolveExportDirectory();
+
         public GenerationOperationResult Generate()
         {
             try
@@ -102,6 +110,11 @@ namespace SpriteGenerator
                 presenter.CurrentTexture,
                 presentationSettings.ResolveExportDirectory(),
                 fileName);
+        }
+
+        public void UseDefaultExportDirectory()
+        {
+            presentationSettings.ExportDirectory = string.Empty;
         }
 
         public void Dispose()

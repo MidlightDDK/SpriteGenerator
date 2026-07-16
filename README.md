@@ -10,7 +10,7 @@ No source character PNGs, cloud services, or AI image APIs are required.
 2. Press Play.
 3. A generated character and the runtime control panel appear immediately.
 
-Use **Randomize Unlocked** to create a new controlled variation, lock any layers that should remain unchanged, and use **Export PNG** to save the current sprite. By default, exports go to `Application.persistentDataPath/GeneratedSprites`; the full path is shown after export.
+Use **Randomize Unlocked** to create a new controlled variation, lock any layers that should remain unchanged, and use **Export PNG** to save the current sprite. Exports default to the current working folder. The path field accepts pasted paths, while **Browse...** opens the native folder chooser on Windows. The full saved path is shown after export, and **Quit** closes a build or stops Play Mode in the Editor.
 
 ## Exposed generation parameters
 

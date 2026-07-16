@@ -30,7 +30,7 @@ namespace SpriteGenerator
         private int sortingOrder = 10;
 
         [SerializeField]
-        [Tooltip("Leave empty to export under Application.persistentDataPath/GeneratedSprites.")]
+        [Tooltip("Leave empty to export to the process's current working folder.")]
         private string exportDirectory = string.Empty;
 
         [SerializeField]
@@ -87,8 +87,54 @@ namespace SpriteGenerator
         public string ResolveExportDirectory()
         {
             return string.IsNullOrWhiteSpace(exportDirectory)
-                ? Path.Combine(Application.persistentDataPath, "GeneratedSprites")
-                : exportDirectory.Trim();
+                ? ResolveDefaultExportDirectory()
+                : NormalizeDirectoryInput(exportDirectory);
+        }
+
+        public static string ResolveDefaultExportDirectory()
+        {
+            try
+            {
+                string currentDirectory = Directory.GetCurrentDirectory();
+                if (!string.IsNullOrWhiteSpace(currentDirectory))
+                {
+                    return Path.GetFullPath(currentDirectory);
+                }
+            }
+            catch (Exception)
+            {
+                // Fall through to Unity-owned paths when the host does not expose a working directory.
+            }
+
+            try
+            {
+                string applicationDirectory = Directory.GetParent(Application.dataPath)?.FullName;
+                if (!string.IsNullOrWhiteSpace(applicationDirectory))
+                {
+                    return applicationDirectory;
+                }
+            }
+            catch (Exception)
+            {
+                // Application.persistentDataPath is the final platform-safe fallback.
+            }
+
+            return Application.persistentDataPath;
+        }
+
+        private static string NormalizeDirectoryInput(string value)
+        {
+            string normalized = value.Trim();
+            if (normalized.Length >= 2 &&
+                ((normalized[0] == '"' && normalized[normalized.Length - 1] == '"') ||
+                 (normalized[0] == '\'' && normalized[normalized.Length - 1] == '\'')))
+            {
+                normalized = normalized.Substring(1, normalized.Length - 2).Trim();
+            }
+
+            return string.IsNullOrWhiteSpace(normalized)
+                ? ResolveDefaultExportDirectory()
+                : normalized;
         }
     }
 }
